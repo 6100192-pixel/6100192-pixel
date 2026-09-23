@@ -2,9 +2,11 @@
 // Jack Breckon
 // Sept 21, 2026
 // Making a scene with an artist mark, A protagonist, Interactivity, and a Scene
-let mood = "happy"
-let currentBack = 0
+let mood = "happy";
+let currentBack = 0;
 let bg = 0;
+let angle1 = 0.5;
+let angle2 = 3;
 async function setup() {
   createCanvas(windowWidth, windowHeight);
 }
@@ -19,9 +21,9 @@ function draw() {
   rect(mouseX+25, 200, 25, 100);
   
   /// Making mouth
-  stroke(0)
-  arc(mouseX,220, 30,30,);
-  noStroke()
+  stroke(0);
+  arc(mouseX,220, 30,30,angle1,angle2);
+  noStroke();
   /// Creation of the Scene
   fill(255, 218, 66);
   circle(windowWidth/2,windowHeight*2, windowHeight * 3.4);
@@ -29,7 +31,16 @@ function draw() {
   circle(windowWidth/2*1.3,windowHeight*0.6, 200);
   fill(255, 205, 0);
   circle(windowWidth/2*0.8,windowHeight*0.8, 300);
+  /// mood code
+  if(mood === "happy"){
+    angle1 = 0.5;
+    angle2 = 3;
+  }
+  else if(mood === "sad"){
+    angle1 = 2;
+    angle2 = 1;
 
+  }
 
 
 
@@ -57,9 +68,12 @@ function mousePressed() {
       bg = 0;
     }
   }
-  if (mouseButton.left === true){
-    mood = "sad";
-  } else if(mood === "sad"){
-    mood = "happy";
+  if(mouseButton.left === true){
+    if(mood === "happy"){
+      mood = "sad";
+    } 
+    else if(mood === "sad"){
+      mood = "happy";
+    }
   }
 }
