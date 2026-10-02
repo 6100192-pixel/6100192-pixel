@@ -20,7 +20,7 @@ function gradientBackground(){
   let y = 0;
   let h = 1;
   while(y < height){
-    fill(y * mouseY/1000, y * mouseX/1000, y* ((mouseX+mouseY)/2));
+    fill(y*  1,y* 1,y*1);
     rect(0, y, width,h);
     y += h;
   }
@@ -41,8 +41,8 @@ function challenge(d) {
 }
 function draw() {
   background(220);
-  challenge(40)
-  //gradientBackground();
+  //challenge(40)
+  gradientBackground();
   //worm(windowHeight /2,40);
   //worm(50,30);
 }
