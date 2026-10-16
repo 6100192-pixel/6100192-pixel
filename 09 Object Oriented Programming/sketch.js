@@ -10,10 +10,12 @@ let masonbook;
 let elijahbook;
 let book4;
 let book5;
+let books;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
   // create a single book
+  books = [myBook,masonbook,masonbook,elijahbook,book4,book5];
   myBook = new Book("masonismean","Jack",20100816,"leatherbound",500,width*0.3);
   masonbook = new Book("iampoopy","Mason",20100817,"hardcopy",500,width*0.45);
   elijahbook = new Book("mesocool","eljah",20100818,"softcopy",500,width*0.6);
