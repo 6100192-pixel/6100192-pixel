@@ -24,7 +24,8 @@ function draw() {
 function mousePressed(){
   if(mouseButton.left){
     nodes.push(new CsNode(mouseX,mouseY));
-  }else if(mouseButton.center){
+  }
+  else if(mouseButton.center){
     for (let i = 0; i <300; i++){
       nodes.push(new CsNode(mouseX,mouseY));
     }
@@ -56,8 +57,12 @@ class CsNode{
     xSpeed = map(xSpeed,0,1,-this.maxSpeed,this.maxSpeed);
     this.xTime += this.timeShift;
     this.x += xSpeed;
-    if(this.x > width) {this.x = 0;}
-    else if (this.x <0) {this.x = width;}
+    if(this.x > width) {
+      this.x = 0;
+    }
+    else if (this.x <0) {
+      this.x = width;
+    }
 
 
     let ySpeed = noise(this.yTime);
@@ -65,8 +70,12 @@ class CsNode{
     this.yTime += this.timeShift;
     this.y += ySpeed;
 
-    if(this.y > height) {this.y = 0;}
-    else if (this.y <0) {this.y = height;}
+    if(this.y > height) {
+      this.y = 0;
+    }
+    else if (this.y <0) {
+      this.y = height;
+    }
   }
 
   connect(nodearray){
