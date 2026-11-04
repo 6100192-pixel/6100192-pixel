@@ -4,11 +4,11 @@
 
 
 let grid = [
-  [ 0 , 255, 0 , 255, 0 ,255],
-  [ 255, 0 ,255,   0  , 255, 0],
-  [ 0 , 255, 0 , 255, 0 , 255,0],
-  [ 0  ,  0,  0,  0,  0,  0,0],
-  [255 , 255, 255, 255, 255,255]
+  [ 255 , 255, 0 , 255, 0 ,255],
+  [ 255, 255 ,255,   0  , 255, 255],
+  [ 255 , 255, 0 , 255, 0 , 255,0],
+  [ 255  ,  255,  255,  0,  255,  255,255],
+  [255 , 255, 0, 255, 0,255]
 ];
 let rows = grid.length;
 let cols = grid[0].length;
@@ -21,14 +21,54 @@ async function setup() {
 
 function draw() {
   background(220);
+  
   renderGrid();
+  getCurrentX();
+  
+}
+function mousePressed(){
+  if(mouseX < width && mouseY < height){
+    let x = getCurrentX();
+    let y = getCurrentY();
+    flip(x,y);
+    if (x-1 >=0) {
+      flip(x+1,y);
+    }
+    if (x+1 <=0) {
+      flip(x-1,y);
+    }
+    if (y-1 >=5) {
+      flip(x,y+1);
+    }
+    if (y+1 <=5) {
+      flip(x,y-1);
+    }
+  }
+}
+
+function flip(x,y){
+  if (grid[y][x] === 255) {
+    grid[y][x] = 0;
+  }
+  else {
+    grid[y][x] = 255;
+  }
+}
+
+function getCurrentX(){
+  let constrainedX = constrain(mouseX,0,width-1);
+  return int(constrainedX/tileSize);
+}
+function getCurrentY(){
+  let constrainedY = constrain(mouseY,0,height-1);
+  return int(constrainedY/tileSize);
 }
 
 function renderGrid(){
   // interpret the data stored in 2D array and draw matrix of square to reflect it.
   for(let y = 0; y<rows;y++){
     for(let x = 0;x<cols;x++){
-      let fillcolour =(grid[y][x]);
+      let fillcolour =grid[y][x];
       fill(fillcolour);
       square(x*tileSize,y*tileSize,tileSize);
     }
