@@ -17,6 +17,7 @@ let tileSize = 60;
 
 async function setup() {
   createCanvas(cols*tileSize,rows*tileSize);
+  randomize();
 }
 
 function draw() {
@@ -24,23 +25,23 @@ function draw() {
   
   renderGrid();
   getCurrentX();
-  
+  winCon();
 }
 function mousePressed(){
   if(mouseX < width && mouseY < height){
     let x = getCurrentX();
     let y = getCurrentY();
     flip(x,y);
-    if (x-1 >=0) {
+    if (x+1 <=cols-1) {
       flip(x+1,y);
     }
-    if (x+1 <=0) {
+    if (x-1 >=0) {
       flip(x-1,y);
     }
-    if (y-1 >=5) {
+    if (y+1 <=rows-1) {
       flip(x,y+1);
     }
-    if (y+1 <=5) {
+    if (y-1 >=0) {
       flip(x,y-1);
     }
   }
@@ -52,6 +53,29 @@ function flip(x,y){
   }
   else {
     grid[y][x] = 255;
+  }
+}
+function randomize(){
+  for (let x = 0; x<grid.length;x++){
+    for (let y = 0; y<grid[x].length;y++){
+      grid[x][y] = random([0,255]);
+    }
+  }
+}
+function winCon(){
+  let counterwhite = 0;
+  let counterblack = 0;
+  for (let x = 0; x<grid.length;x++){
+    for (let y = 0; y<grid[x].length;y++){
+      if (grid[x][y] === 0){
+        counterblack++;
+      } else {
+        counterwhite++;
+      }
+    }
+  }
+  if (counterblack === rows*cols|| counterwhite === rows*cols){
+    console.log("you win congrats");
   }
 }
 
