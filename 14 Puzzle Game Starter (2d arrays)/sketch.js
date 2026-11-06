@@ -13,7 +13,7 @@ let grid = [
 let rows = grid.length;
 let cols = grid[0].length;
 let tileSize = 60;
-
+let shape = "cross";
 
 async function setup() {
   createCanvas(cols*tileSize,rows*tileSize);
@@ -26,23 +26,40 @@ function draw() {
   renderGrid();
   getCurrentX();
   winCon();
+  overlay();
 }
 function mousePressed(){
   if(mouseX < width && mouseY < height){
     let x = getCurrentX();
     let y = getCurrentY();
     flip(x,y);
-    if (x+1 <=cols-1) {
-      flip(x+1,y);
+    if (keyIsDown(SHIFT)){
+      return;
     }
-    if (x-1 >=0) {
-      flip(x-1,y);
+    else if (shape === "cross"){
+      if (x+1 <=cols-1) {
+        flip(x+1,y);
+      }
+      if (x-1 >=0) {
+        flip(x-1,y);
+      }
+      if (y+1 <=rows-1) {
+        flip(x,y+1);
+      }
+      if (y-1 >=0) {
+        flip(x,y-1);
+      }
     }
-    if (y+1 <=rows-1) {
-      flip(x,y+1);
-    }
-    if (y-1 >=0) {
-      flip(x,y-1);
+    else {
+      if (x+1 <=cols-1) {
+        flip(x+1,y);
+      }
+      if (x+1 >=0 && y+1<=0 ) {
+        flip(x+1,y+1);
+      }
+      if (y+1 <=rows-1) {
+        flip(x,y+1);
+      }
     }
   }
 }
@@ -62,6 +79,18 @@ function randomize(){
     }
   }
 }
+function keyPressed(){
+  if (key === ' '){
+    if (shape === "cross"){
+      shape = "square";
+    }
+    else{
+      shape = "cross";
+    }
+  }
+}
+
+
 function winCon(){
   let counterwhite = 0;
   let counterblack = 0;
@@ -69,12 +98,13 @@ function winCon(){
     for (let y = 0; y<grid[x].length;y++){
       if (grid[x][y] === 0){
         counterblack++;
-      } else {
+      }
+      else {
         counterwhite++;
       }
     }
   }
-  if (counterblack === rows*cols|| counterwhite === rows*cols){
+  if (counterblack === rows*cols+1|| counterwhite === rows*cols+1){
     console.log("you win congrats");
   }
 }
@@ -97,4 +127,30 @@ function renderGrid(){
       square(x*tileSize,y*tileSize,tileSize);
     }
   }
+}
+
+
+
+function overlay(){
+  if(mouseX < width && mouseY < height){
+    let overlay = color(0,255,0,127);
+    fill (overlay);
+    if (keyIsDown(SHIFT)){
+      square(getCurrentX()*tileSize,getCurrentY()*tileSize,tileSize);
+    }
+    else if(shape === "cross"){
+      square(getCurrentX()*tileSize,getCurrentY()*tileSize,tileSize);
+      square(getCurrentX()*tileSize+tileSize,getCurrentY()*tileSize,tileSize);
+      square(getCurrentX()*tileSize-tileSize,getCurrentY()*tileSize,tileSize);
+      square(getCurrentX()*tileSize,getCurrentY()*tileSize+tileSize,tileSize);
+      square(getCurrentX()*tileSize,getCurrentY()*tileSize-tileSize,tileSize);
+    }
+    else{
+      square(getCurrentX()*tileSize,getCurrentY()*tileSize,tileSize);
+      square(getCurrentX()*tileSize+tileSize,getCurrentY()*tileSize,tileSize);
+      square(getCurrentX()*tileSize+tileSize,getCurrentY()*tileSize+tileSize,tileSize);
+      square(getCurrentX()*tileSize,getCurrentY()*tileSize+tileSize,tileSize);
+    }
+  }
+    
 }
