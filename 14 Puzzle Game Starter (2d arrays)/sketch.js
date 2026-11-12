@@ -4,11 +4,13 @@
 
 
 let grid = [
-  [ 255 , 255, 0 , 255, 0 ,255],
-  [ 255, 255 ,255,   0  , 255, 255],
-  [ 255 , 255, 0 , 255, 0 , 255,0],
-  [ 255  ,  255,  255,  0,  255,  255,255],
-  [255 , 255, 0, 255, 0,255]
+  [0,0,0,0,0,0],
+  [0,0,0,0,0,0],
+  [0,0,0,0,0,0],
+  [0,0,0,0,0,0],
+  [0,0,0,0,0,0],
+  [0,0,0,0,0,0]
+
 ];
 let rows = grid.length;
 let cols = grid[0].length;
@@ -54,7 +56,7 @@ function mousePressed(){
       if (x+1 <=cols-1) {
         flip(x+1,y);
       }
-      if (x+1 >=0 && y+1<=0 ) {
+      if (x+1 <=cols-1 && y+1<=rows -1 ) {
         flip(x+1,y+1);
       }
       if (y+1 <=rows-1) {
@@ -104,8 +106,11 @@ function winCon(){
       }
     }
   }
-  if (counterblack === rows*cols+1|| counterwhite === rows*cols+1){
+  if (counterblack === rows*cols|| counterwhite === rows*cols){
     console.log("you win congrats");
+    textSize(32);
+    fill('red');
+    text("you win congrats twin :D",0,50);
   }
 }
 
