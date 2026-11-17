@@ -13,19 +13,82 @@ async function loadAsset(){
 
 
 async function setup() {
-  createCanvas(600,600);
+  createCanvas(640,408);
   await loadAsset();
+  myVideo = createCapture(VIDEO);
+  myVideo.hide();
 }
 
 function draw() {
   background(220);
-  image(race,0,0);
+  image(myVideo,0,0);
   loadPixels();
   //majoritycolour();
-  noGreen()
+  //noGreen();
+  //posterize();
+  evilhMirror();
+  //hMirror();
   updatePixels();
+  
 }
+
+function evilhMirror(){
+  for(let x = width/2; x > 0; x--){
+    for (let y = 0; y < height; y++){
+      let r = getRed(x,y);
+      let g = getGreen(x,y);
+      let b = getBlue(x,y);
+      setPixel(x+2*(width/2-x),y,r,g,b);
+    }
+  }
+}
+
+
+
+function hMirror(){
+  for(let x = width/2; x < width; x++){
+    for (let y = 0; y < height; y++){
+      let r = getRed(x,y);
+      let g = getGreen(x,y);
+      let b = getBlue(x,y);
+      setPixel(x+2*(width/2-x),y,r,g,b);
+    }
+  }
+}
+
+function posterize(){
+  for(let x = 0; x < width; x ++){
+    for (let y = 0; y < height; y++){
+      let avg = getAvg(x,y);
+      if(avg > 205){
+        setPixel(x,y,170,230,220);
+      }
+      else if ( avg > 155){
+        setPixel(x,y,105,230,220);
+      }
+      else if (avg > 105){
+        setPixel(x,y,120,280,60);
+      }
+      else if (avg > 55){
+        setPixel(x,y,130,30,130);
+      }
+      else{
+        setPixel(90,10,50);
+      }
+    }
+  }
+}
+
+
+
 function noGreen(){
+  for(let x = width/2; x < width; x ++){
+    for (let y = 0; y < height; y++){
+      let r = getRed(x,y);
+      let b = getBlue(x,y);
+      setPixel(x,y,r,0,b);
+    }
+  }
   
 }
 
